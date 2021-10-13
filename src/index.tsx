@@ -3,13 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AppProvider } from './providers/app.provider';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function initApp () {
+  const port = chrome.runtime.connect({ name: 'popup' });
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <AppProvider port={port}>
+        <App />
+      </AppProvider>
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+
+}
+
+initApp();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
